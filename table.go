@@ -22,6 +22,13 @@ type Records struct {
 	Typecast bool `json:"typecast,omitempty"`
 }
 
+type GeneralRecords[T any] struct {
+	Records []*GeneralRecord[T] `json:"records"`
+	Offset  string              `json:"offset,omitempty"`
+
+	Typecast bool `json:"typecast,omitempty"`
+}
+
 // Table represents table object.
 type Table struct {
 	client    *Client
@@ -60,6 +67,10 @@ func (t *Table) GetRecordsWithParamsContext(ctx context.Context, params url.Valu
 	}
 
 	return records, nil
+}
+
+func (t *Table) GetRecordsWithModel(ctx context.Context, params url.Values, model any) error {
+	return t.client.get(ctx, t.dbName, t.tableName, "", params, model)
 }
 
 // AddRecords method to add lines to table (up to 10 in one request)

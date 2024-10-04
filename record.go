@@ -26,6 +26,17 @@ type Record struct {
 	Typecast bool `json:"typecast,omitempty"`
 }
 
+type GeneralRecord[T any] struct {
+	client      *Client
+	table       *Table
+	ID          string `json:"id,omitempty"`
+	Fields      T      `json:"fields"`
+	CreatedTime string `json:"createdTime,omitempty"`
+	Deleted     bool   `json:"deleted,omitempty"`
+
+	Typecast bool `json:"typecast,omitempty"`
+}
+
 // GetRecord get record from table
 // https://airtable.com/{yourDatabaseID}/api/docs#curl/table:{yourTableName}:retrieve
 func (t *Table) GetRecord(recordID string) (*Record, error) {

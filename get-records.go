@@ -6,6 +6,7 @@
 package airtable
 
 import (
+	"context"
 	"fmt"
 	"net/url"
 	"strconv"
@@ -104,4 +105,8 @@ func (grc *GetRecordsConfig) InStringFormat(timeZone, userLocale string) *GetRec
 // Do send the prepared get records request.
 func (grc *GetRecordsConfig) Do() (*Records, error) {
 	return grc.table.GetRecordsWithParams(grc.params)
+}
+
+func (grc *GetRecordsConfig) DoWithModel(ctx context.Context, model any) error {
+	return grc.table.GetRecordsWithModel(ctx, grc.params, model)
 }
